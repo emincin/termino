@@ -2,6 +2,7 @@
 name = "termino"
 version = "0.0.0"
 edition = "2024"
-description = "A terminal library for Rust"
+description = "A terminal library for Rust."
+readme = "README.md"
 repository = "https://github.com/emincin/termino"
 license = "MIT"
