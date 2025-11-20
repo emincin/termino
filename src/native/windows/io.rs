@@ -18,6 +18,8 @@ unsafe extern "system" {
     ) -> i32;
 }
 
+const NULL: usize = 0;
+const STD_INPUT_HANDLE: u32 = -10i32 as u32;
 const STD_OUTPUT_HANDLE: u32 = -11i32 as u32;
 const CP_UTF8: u32 = 65001;
 
