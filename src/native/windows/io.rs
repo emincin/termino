@@ -19,6 +19,7 @@ unsafe extern "system" {
 }
 
 const NULL: usize = 0;
+const INVALID_HANDLE_VALUE: usize = -1i64 as usize;
 const STD_INPUT_HANDLE: u32 = -10i32 as u32;
 const STD_OUTPUT_HANDLE: u32 = -11i32 as u32;
 const CP_UTF8: u32 = 65001;
@@ -30,6 +31,9 @@ pub fn print(s: &str) {
             set_console_output_cp(CP_UTF8);
         }
         let handle: usize = get_std_handle(STD_OUTPUT_HANDLE);
+        if handle == INVALID_HANDLE_VALUE || handle == NULL {
+            return;
+        }
         let mut written: u32 = 0;
         write_console(handle, s.as_ptr(), s.len() as u32, &mut written, 0);
     }
