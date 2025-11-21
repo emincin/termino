@@ -2,6 +2,12 @@ unsafe extern "system" {
     #[link_name = "GetStdHandle"]
     unsafe fn get_std_handle(id: u32) -> usize;
 
+    #[link_name = "GetConsoleMode"]
+    unsafe fn get_console_mode(handle: usize, mode: *mut u32) -> i32;
+
+    #[link_name = "SetConsoleMode"]
+    unsafe fn set_console_mode(handle: usize, mode: u32) -> i32;
+
     #[link_name = "GetConsoleCP"]
     unsafe fn get_console_cp() -> u32;
 
