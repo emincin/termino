@@ -8,6 +8,15 @@ unsafe extern "system" {
     #[link_name = "SetConsoleOutputCP"]
     unsafe fn set_console_output_cp(code_page: u32) -> i32;
 
+    #[link_name = "ReadConsoleA"]
+    unsafe fn read_console(
+        handle: usize,
+        buf: *mut u8,
+        len: u32,
+        read: *mut u32,
+        reserved: usize,
+    ) -> i32;
+
     #[link_name = "WriteConsoleA"]
     unsafe fn write_console(
         handle: usize,
