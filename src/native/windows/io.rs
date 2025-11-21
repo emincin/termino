@@ -2,6 +2,12 @@ unsafe extern "system" {
     #[link_name = "GetStdHandle"]
     unsafe fn get_std_handle(id: u32) -> usize;
 
+    #[link_name = "GetConsoleCP"]
+    unsafe fn get_console_cp() -> u32;
+
+    #[link_name = "SetConsoleCP"]
+    unsafe fn set_console_cp(code_page: u32) -> i32;
+
     #[link_name = "GetConsoleOutputCP"]
     unsafe fn get_console_output_cp() -> u32;
 
