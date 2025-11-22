@@ -59,3 +59,24 @@ pub fn print(s: &str) {
         write_console(handle, s.as_ptr(), s.len() as u32, &mut written, 0);
     }
 }
+
+pub fn read_string(capacity: usize) -> String {
+    unsafe {
+        let code_page: u32 = get_console_cp();
+        if code_page != CP_UTF8 {
+            set_console_cp(CP_UTF8);
+        }
+        let handle: usize = get_std_handle(STD_INPUT_HANDLE);
+        if handle == INVALID_HANDLE_VALUE || handle == NULL {
+            return String::new();
+        }
+        let mut s: String = String::with_capacity(capacity);
+        let mut read: u32 = 0;
+        let ret: i32 = read_console(handle, s.as_mut_ptr(), capacity as u32, &mut read, 0);
+        if ret == 0 {
+            return String::new();
+        }
+        s.as_mut_vec().set_len(read as usize);
+        return s;
+    }
+}
