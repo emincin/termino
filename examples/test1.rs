@@ -1,9 +1,12 @@
 use termino::info::hello_termino;
 use termino::io::print;
+use termino::io::read_string;
 
 fn main() {
     println!("Test 1");
     hello_termino();
     print("print!\n");
     print("😄\n");
+    let input: String = read_string(16);
+    print(&input);
 }
