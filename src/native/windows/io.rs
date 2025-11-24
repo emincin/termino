@@ -44,6 +44,7 @@ const INVALID_HANDLE_VALUE: usize = -1i64 as usize;
 const STD_INPUT_HANDLE: u32 = -10i32 as u32;
 const STD_OUTPUT_HANDLE: u32 = -11i32 as u32;
 const CP_UTF8: u32 = 65001;
+const ENABLE_LINE_INPUT: u32 = 2;
 
 pub fn print(s: &str) {
     unsafe {
@@ -78,5 +79,19 @@ pub fn read_string(capacity: usize) -> String {
         }
         s.as_mut_vec().set_len(read as usize);
         return s;
+    }
+}
+
+pub fn disable_line_input() {
+    unsafe {
+        let handle: usize = get_std_handle(STD_INPUT_HANDLE);
+        if handle == INVALID_HANDLE_VALUE || handle == NULL {
+            return;
+        }
+        let mut mode: u32 = 0;
+        let ret: i32 = get_console_mode(handle, &mut mode);
+        if ret == 0 {
+            return;
+        }
     }
 }
