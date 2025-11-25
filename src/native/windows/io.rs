@@ -111,3 +111,21 @@ pub fn disable_line_input() {
 pub fn disable_echo_input() {
     disable_input_flag(ENABLE_ECHO_INPUT);
 }
+
+pub fn enable_raw_mode() -> bool {
+    unsafe {
+        let handle: usize = get_std_handle(STD_INPUT_HANDLE);
+        if handle == INVALID_HANDLE_VALUE || handle == NULL {
+            return false;
+        }
+        let mut mode: u32 = 0;
+        let ret: i32 = get_console_mode(handle, &mut mode);
+        if ret == 0 {
+            return false;
+        }
+        mode &= !ENABLE_PROCESSED_INPUT;
+        mode &= !ENABLE_LINE_INPUT;
+        mode &= !ENABLE_ECHO_INPUT;
+        return set_console_mode(handle, mode) != 0;
+    }
+}
