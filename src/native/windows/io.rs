@@ -47,6 +47,22 @@ const CP_UTF8: u32 = 65001;
 const ENABLE_LINE_INPUT: u32 = 2;
 const ENABLE_ECHO_INPUT: u32 = 4;
 
+fn disable_input_flag(flag: u32) -> bool {
+    unsafe {
+        let handle: usize = get_std_handle(STD_INPUT_HANDLE);
+        if handle == INVALID_HANDLE_VALUE || handle == NULL {
+            return false;
+        }
+        let mut mode: u32 = 0;
+        let ret: i32 = get_console_mode(handle, &mut mode);
+        if ret == 0 {
+            return false;
+        }
+        mode &= !flag;
+        return set_console_mode(handle, mode) != 0;
+    }
+}
+
 pub fn print(s: &str) {
     unsafe {
         let code_page: u32 = get_console_output_cp();
