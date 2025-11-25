@@ -7,6 +7,8 @@ fn main() {
     hello_termino();
     print("print!\n");
     print("😄\n");
+    print("Input something: ");
     let input: String = read_string(16);
+    print("Your input: ");
     print(&input);
 }
