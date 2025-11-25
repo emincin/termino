@@ -100,15 +100,5 @@ pub fn read_string(capacity: usize) -> String {
 }
 
 pub fn disable_line_input() {
-    unsafe {
-        let handle: usize = get_std_handle(STD_INPUT_HANDLE);
-        if handle == INVALID_HANDLE_VALUE || handle == NULL {
-            return;
-        }
-        let mut mode: u32 = 0;
-        let ret: i32 = get_console_mode(handle, &mut mode);
-        if ret == 0 {
-            return;
-        }
-    }
+    disable_input_flag(ENABLE_LINE_INPUT);
 }
