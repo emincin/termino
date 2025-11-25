@@ -45,6 +45,7 @@ const STD_INPUT_HANDLE: u32 = -10i32 as u32;
 const STD_OUTPUT_HANDLE: u32 = -11i32 as u32;
 const CP_UTF8: u32 = 65001;
 const ENABLE_LINE_INPUT: u32 = 2;
+const ENABLE_ECHO_INPUT: u32 = 4;
 
 pub fn print(s: &str) {
     unsafe {
