@@ -44,6 +44,7 @@ const INVALID_HANDLE_VALUE: usize = -1i64 as usize;
 const STD_INPUT_HANDLE: u32 = -10i32 as u32;
 const STD_OUTPUT_HANDLE: u32 = -11i32 as u32;
 const CP_UTF8: u32 = 65001;
+const ENABLE_PROCESSED_INPUT: u32 = 1;
 const ENABLE_LINE_INPUT: u32 = 2;
 const ENABLE_ECHO_INPUT: u32 = 4;
 
@@ -99,6 +100,14 @@ pub fn read_string(capacity: usize) -> String {
     }
 }
 
+pub fn disable_processed_input() {
+    disable_input_flag(ENABLE_PROCESSED_INPUT);
+}
+
 pub fn disable_line_input() {
     disable_input_flag(ENABLE_LINE_INPUT);
+}
+
+pub fn disable_echo_input() {
+    disable_input_flag(ENABLE_ECHO_INPUT);
 }
