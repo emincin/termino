@@ -100,16 +100,16 @@ pub fn read_string(capacity: usize) -> String {
     }
 }
 
-pub fn disable_processed_input() {
-    disable_input_flag(ENABLE_PROCESSED_INPUT);
+pub fn disable_processed_input() -> bool {
+    return disable_input_flag(ENABLE_PROCESSED_INPUT);
 }
 
-pub fn disable_line_input() {
-    disable_input_flag(ENABLE_LINE_INPUT);
+pub fn disable_line_input() -> bool {
+    return disable_input_flag(ENABLE_LINE_INPUT);
 }
 
-pub fn disable_echo_input() {
-    disable_input_flag(ENABLE_ECHO_INPUT);
+pub fn disable_echo_input() -> bool {
+    return disable_input_flag(ENABLE_ECHO_INPUT);
 }
 
 pub fn enable_raw_mode() -> bool {
