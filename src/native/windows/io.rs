@@ -99,7 +99,10 @@ pub fn read_string(capacity: usize) -> String {
     unsafe {
         let code_page: u32 = get_console_cp();
         if code_page != CP_UTF8 {
-            set_console_cp(CP_UTF8);
+            let ret: i32 = set_console_cp(CP_UTF8);
+            if ret == 0 {
+                return String::new();
+            }
         }
         let handle: usize = get_std_handle(STD_INPUT_HANDLE);
         if handle == INVALID_HANDLE_VALUE || handle == NULL {
