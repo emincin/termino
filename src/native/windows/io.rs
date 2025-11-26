@@ -103,6 +103,9 @@ pub fn print(s: &str) -> usize {
         if handle == INVALID_HANDLE_VALUE || handle == NULL {
             return 0;
         }
+        if !is_console(handle) {
+            return 0;
+        }
         let mut written: u32 = 0;
         let ret: i32 = write_console(handle, s.as_ptr(), s.len() as u32, &mut written, 0);
         if ret == 0 {
@@ -123,6 +126,9 @@ pub fn read_string(capacity: usize) -> String {
         }
         let handle: usize = get_std_handle(STD_INPUT_HANDLE);
         if handle == INVALID_HANDLE_VALUE || handle == NULL {
+            return String::new();
+        }
+        if !is_console(handle) {
             return String::new();
         }
         let mut s: String = String::with_capacity(capacity);
