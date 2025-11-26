@@ -1,4 +1,7 @@
 unsafe extern "system" {
+    #[link_name = "GetLastError"]
+    unsafe fn get_last_error() -> u32;
+
     #[link_name = "GetStdHandle"]
     unsafe fn get_std_handle(id: u32) -> usize;
 
@@ -47,6 +50,13 @@ const CP_UTF8: u32 = 65001;
 const ENABLE_PROCESSED_INPUT: u32 = 1;
 const ENABLE_LINE_INPUT: u32 = 2;
 const ENABLE_ECHO_INPUT: u32 = 4;
+
+fn is_console(handle: usize) -> bool {
+    unsafe {
+        let mut mode: u32 = 0;
+        return get_console_mode(handle, &mut mode) != 0;
+    }
+}
 
 fn enable_input_flag(flag: u32) -> bool {
     unsafe {
