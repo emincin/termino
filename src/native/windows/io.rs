@@ -48,6 +48,22 @@ const ENABLE_PROCESSED_INPUT: u32 = 1;
 const ENABLE_LINE_INPUT: u32 = 2;
 const ENABLE_ECHO_INPUT: u32 = 4;
 
+fn enable_input_flag(flag: u32) -> bool {
+    unsafe {
+        let handle: usize = get_std_handle(STD_INPUT_HANDLE);
+        if handle == INVALID_HANDLE_VALUE || handle == NULL {
+            return false;
+        }
+        let mut mode: u32 = 0;
+        let ret: i32 = get_console_mode(handle, &mut mode);
+        if ret == 0 {
+            return false;
+        }
+        mode |= flag;
+        return set_console_mode(handle, mode) != 0;
+    }
+}
+
 fn disable_input_flag(flag: u32) -> bool {
     unsafe {
         let handle: usize = get_std_handle(STD_INPUT_HANDLE);
@@ -98,6 +114,18 @@ pub fn read_string(capacity: usize) -> String {
         s.as_mut_vec().set_len(read as usize);
         return s;
     }
+}
+
+pub fn enable_processed_input() -> bool {
+    return enable_input_flag(ENABLE_PROCESSED_INPUT);
+}
+
+pub fn enable_line_input() -> bool {
+    return enable_input_flag(ENABLE_LINE_INPUT);
+}
+
+pub fn enable_echo_input() -> bool {
+    return enable_input_flag(ENABLE_ECHO_INPUT);
 }
 
 pub fn disable_processed_input() -> bool {
