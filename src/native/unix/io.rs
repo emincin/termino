@@ -17,6 +17,7 @@ pub fn print(s: &str) -> usize {
         }
         let ret: isize = write(STDOUT_FILENO, s.as_ptr(), s.len());
         if ret < 0 {
+            if ret == ERROR {}
             return 0;
         }
         return ret as usize;
@@ -30,7 +31,8 @@ pub fn read_string(capacity: usize) -> String {
         }
         let mut s: String = String::with_capacity(capacity);
         let ret: isize = read(STDIN_FILENO, s.as_mut_ptr(), capacity);
-        if ret == ERROR {
+        if ret < 0 {
+            if ret == ERROR {}
             return String::new();
         }
         s.as_mut_vec().set_len(ret as usize);
