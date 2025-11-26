@@ -80,21 +80,25 @@ fn disable_input_flag(flag: u32) -> bool {
     }
 }
 
-pub fn print(s: &str) {
+pub fn print(s: &str) -> usize {
     unsafe {
         let code_page: u32 = get_console_output_cp();
         if code_page != CP_UTF8 {
             let ret: i32 = set_console_output_cp(CP_UTF8);
             if ret == 0 {
-                return;
+                return 0;
             }
         }
         let handle: usize = get_std_handle(STD_OUTPUT_HANDLE);
         if handle == INVALID_HANDLE_VALUE || handle == NULL {
-            return;
+            return 0;
         }
         let mut written: u32 = 0;
-        write_console(handle, s.as_ptr(), s.len() as u32, &mut written, 0);
+        let ret: i32 = write_console(handle, s.as_ptr(), s.len() as u32, &mut written, 0);
+        if ret == 0 {
+            return 0;
+        }
+        return written as usize;
     }
 }
 
