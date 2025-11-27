@@ -1,3 +1,14 @@
+#[repr(C)]
+struct termios {
+    c_iflag: u64,
+    c_oflag: u64,
+    c_cflag: u64,
+    c_lflag: u64,
+    c_cc: [u8; 20],
+    c_ispeed: u64,
+    c_ospeed: u64,
+}
+
 unsafe extern "C" {
     unsafe fn isatty(fd: i32) -> i32;
 
