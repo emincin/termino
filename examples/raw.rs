@@ -14,7 +14,8 @@ fn main() {
                 let s: String = (c as u32).to_string();
                 print(&s);
             }
+        } else {
+            print(&input);
         }
-        print(&input);
     }
 }
