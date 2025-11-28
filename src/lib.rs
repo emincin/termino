@@ -1,4 +1,5 @@
 pub mod info;
+pub mod utils;
 
 #[cfg(target_family = "unix")]
 #[path = "native/unix/io.rs"]
