@@ -87,6 +87,8 @@ pub fn disable_raw_mode() -> bool {
         if ret != OK {
             return false;
         }
+        term.c_lflag |= ECHO;
+        term.c_lflag |= ICANON;
         let ret: i32 = tcsetattr(STDIN_FILENO, TCSANOW, &term);
         if ret != OK {
             return false;
