@@ -74,3 +74,9 @@ pub fn enable_raw_mode() -> bool {
         return true;
     }
 }
+
+pub fn disable_raw_mode() -> bool {
+    unsafe {
+        return true;
+    }
+}
