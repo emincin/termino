@@ -26,6 +26,7 @@ const OK: i32 = 0;
 const ERROR: isize = -1;
 const STDIN_FILENO: i32 = 0;
 const STDOUT_FILENO: i32 = 1;
+const STDERR_FILENO: i32 = 2;
 const TCSANOW: i32 = 0;
 const TCSADRAIN: i32 = 1;
 const TCSAFLUSH: i32 = 2;
@@ -77,6 +78,15 @@ pub fn enable_raw_mode() -> bool {
 
 pub fn disable_raw_mode() -> bool {
     unsafe {
+        let mut term: termios = termios::default();
+        let ret: i32 = tcgetattr(STDIN_FILENO, &mut term);
+        if ret != OK {
+            return false;
+        }
+        let ret: i32 = tcsetattr(STDIN_FILENO, TCSANOW, &term);
+        if ret != OK {
+            return false;
+        }
         return true;
     }
 }
