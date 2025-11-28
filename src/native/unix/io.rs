@@ -1,3 +1,4 @@
+#[derive(Debug, Default)]
 #[repr(C)]
 struct termios {
     c_iflag: u64,
@@ -15,6 +16,10 @@ unsafe extern "C" {
     unsafe fn read(fd: i32, buf: *mut u8, len: usize) -> isize;
 
     unsafe fn write(fd: i32, buf: *const u8, len: usize) -> isize;
+
+    unsafe fn tcgetattr(fd: i32, term: *mut termios) -> i32;
+
+    unsafe fn tcsetattr(fd: i32, act: i32, term: *const termios) -> i32;
 }
 
 const ERROR: isize = -1;
