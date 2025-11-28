@@ -30,6 +30,8 @@ const STDERR_FILENO: i32 = 2;
 const TCSANOW: i32 = 0;
 const TCSADRAIN: i32 = 1;
 const TCSAFLUSH: i32 = 2;
+const ECHO: u64 = 8;
+const ICANON: u64 = 256;
 
 pub fn print(s: &str) -> usize {
     unsafe {
@@ -68,6 +70,8 @@ pub fn enable_raw_mode() -> bool {
         if ret != OK {
             return false;
         }
+        term.c_lflag &= !ECHO;
+        term.c_lflag &= !ICANON;
         let ret: i32 = tcsetattr(STDIN_FILENO, TCSANOW, &term);
         if ret != OK {
             return false;
