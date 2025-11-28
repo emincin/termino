@@ -20,6 +20,9 @@ unsafe extern "C" {
 const ERROR: isize = -1;
 const STDIN_FILENO: i32 = 0;
 const STDOUT_FILENO: i32 = 1;
+const TCSANOW: i32 = 0;
+const TCSADRAIN: i32 = 1;
+const TCSAFLUSH: i32 = 2;
 
 pub fn print(s: &str) -> usize {
     unsafe {
