@@ -50,6 +50,7 @@ const CP_UTF8: u32 = 65001;
 const ENABLE_PROCESSED_INPUT: u32 = 1;
 const ENABLE_LINE_INPUT: u32 = 2;
 const ENABLE_ECHO_INPUT: u32 = 4;
+const ENABLE_VIRTUAL_TERMINAL_INPUT: u32 = 512;
 
 fn is_console(handle: usize) -> bool {
     unsafe {
@@ -180,6 +181,7 @@ pub fn enable_raw_mode() -> bool {
         mode &= !ENABLE_PROCESSED_INPUT;
         mode &= !ENABLE_LINE_INPUT;
         mode &= !ENABLE_ECHO_INPUT;
+        mode |= ENABLE_VIRTUAL_TERMINAL_INPUT;
         return set_console_mode(handle, mode) != 0;
     }
 }
@@ -198,6 +200,7 @@ pub fn disable_raw_mode() -> bool {
         mode |= ENABLE_PROCESSED_INPUT;
         mode |= ENABLE_LINE_INPUT;
         mode |= ENABLE_ECHO_INPUT;
+        mode &= !ENABLE_VIRTUAL_TERMINAL_INPUT;
         return set_console_mode(handle, mode) != 0;
     }
 }
