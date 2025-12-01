@@ -132,13 +132,17 @@ pub fn read_string(capacity: usize) -> String {
         if !is_console(handle) {
             return String::new();
         }
-        let mut s: String = String::with_capacity(capacity);
+        let mut buf: Vec<u8> = Vec::with_capacity(capacity);
         let mut read: u32 = 0;
-        let ret: i32 = read_console(handle, s.as_mut_ptr(), capacity as u32, &mut read, 0);
+        let ret: i32 = read_console(handle, buf.as_mut_ptr(), capacity as u32, &mut read, 0);
         if ret == 0 {
             return String::new();
         }
-        s.as_mut_vec().set_len(read as usize);
+        buf.set_len(read as usize);
+        let s: String = match String::from_utf8(buf) {
+            Ok(value) => value,
+            Err(_) => String::new(),
+        };
         return s;
     }
 }
