@@ -52,13 +52,17 @@ pub fn read_string(capacity: usize) -> String {
         if isatty(STDIN_FILENO) == 0 {
             return String::new();
         }
-        let mut s: String = String::with_capacity(capacity);
-        let ret: isize = read(STDIN_FILENO, s.as_mut_ptr(), capacity);
+        let mut buf: Vec<u8> = Vec::with_capacity(capacity);
+        let ret: isize = read(STDIN_FILENO, buf.as_mut_ptr(), capacity);
         if ret < 0 {
             if ret == ERROR {}
             return String::new();
         }
-        s.as_mut_vec().set_len(ret as usize);
+        buf.set_len(ret as usize);
+        let s: String = match String::from_utf8(buf) {
+            Ok(value) => value,
+            Err(_) => String::new(),
+        };
         return s;
     }
 }
